@@ -1,0 +1,34 @@
+<h2>C语言库常识</h2>
+<h2>一、</h2>
+<p>char *str1="abcde";会得到一个不可更改的字符串常量str1
+char str2[]="1234";也会分配len("1234","\0")的空间，可以对字符串中的元素str2[1]进行更改
+char str3[3]="hhh";只能被视为字符数组，因为\0要被包含在分配的数组中才算字符串
+char str4[10]="yoyo";实际在str4指向的位置存储了{'y','o','y','o','\0',?,?,?,?,?}
+printf("%s\n", str);只会打印出非\0的内容</p>
+<h2>二、</h2>
+<p>1.strcat(字符串数组des，常量/数组/立即字符串src)
+作用：会让des在自身之后打开'\0'拼接上src再用'\0'封口。注意：保证des足够大。联想：strncat(des,src,n)只拿src的前n个字符拼接
+2.strcpy(字符串数组des，任意字符串src)
+作用：把src覆盖到des。联想：strncpy 没有自动加上终止符的，建议先memset(des,'\0',sizeof(des))
+3.big=strcmp(任意字符串s1,任意字符串s2)
+作用：按ASCII码顺序与前序最大顺序，s1大res就返回1。联想：strcmp区分大小写，strcmpi不区分，strnicmp。strncmp(s1,s2,n)只拿s1与s2的前n个字符比较
+4.字符野指针ptr=strchr(任意字符串src，字符c)
+作用：查找字符串中第一个出现的指定字符的指针ptr。注:char
+注意：ptr-src以%ld输出就是offset，类型是 ptrdiff_t，一个有符号整数类型。可以和int进行运算，强制int转换会因为溢出丢失数据。ptr以%s输出会是往后剩下的半个字符串
+联想：strrchr(str, c);是查找最后一次出现的指定字符的指针ptr
+5.pos=strcspn(字符串str1,字符列表str2)
+作用：str1中哪个位置第一次出现str2中的任意字符。注：contra span，而strspn是str1第一次出现非str2的字符的位置
+6.未定义字符野指针dup_str=strdup(任意字符串str)
+作用：先用malloc()给dup_str分配sizeof(str)的大小，然后将str的内容复制到dup_str指向的地址，返回指针dup_str。可以利用free()来释放dup_str此次申请到的空间
+7.len=strlen(任意字符串str)
+8.字符野指针或刚定义指针ptr = strpbrk(字符串str1, 字符串str2);
+作用：返回str1中第一个和str2相同的字符的指针，若查找失败，则返回NULL 
+9.strrev(字符串数组str)作用：原位颠倒str
+10.strset(字符串数组str, 字符sym);
+作用：保持长度不变，原位字符串全部变成symbol。联想：strnset（str,sym,n）只对str前n个奏效
+11.野指针ptr = strstr(任意字符串str1, 任意字符串str2);作用：返回str2第一次在str1出现的位置的字符指针
+12.野指针p = strtok(任意字符串input, 任意字符串seg);作用：char *token = strtok(str, delim);
+    while (token != NULL) {
+        printf("%s\n", token);
+        token = strtok(NULL, delim);
+    }</p>
